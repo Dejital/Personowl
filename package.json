@@ -2,6 +2,7 @@
   "name": "personowl",
   "version": "1.0.0",
   "description": "Manage your social life with Personowl.",
+  "homepage": "http://personowl.azurewebsites.net/",
   "main": "server.js",
   "scripts": {
     "build-css": "stylus source/stylesheets/index.styl -o static/css",
@@ -24,5 +25,9 @@
   "engineStrict": true,
   "engines": {
     "node": "0.12.2"
+  },
+  "repository": { 
+    "type" : "git"
+  , "url" : "https://github.com/Dejital/Personowl.git"
   }
 }
