@@ -20,5 +20,9 @@
     "morgan": "^1.7.0",
     "nodemon": "^1.9.1",
     "stylus": "^0.54.2"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": "0.12.2"
   }
 }
