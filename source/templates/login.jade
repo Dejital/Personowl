@@ -1,0 +1,13 @@
+extend default
+
+block content
+    h2 Login
+
+    form(role='form', action="/login",method="post")
+        input(type='text', name="username", placeholder='Enter Username')
+        br
+        input(type='password', name="password", placeholder='Password')
+        br
+        button(type='submit') Submit
+        a(href='/')
+            button(type="button") Cancel
