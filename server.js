@@ -1,19 +1,30 @@
 var express = require('express')
   , path = require('path')
   , logger = require('morgan')
-  , app = express()
+  , cookieParser = require('cookie-parser')
+  , bodyParser = require('body-parser')
   , mongoose = require('mongoose')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , routes = require('./routes/index');
 
+var app = express();
+
 app.set('views', path.join(__dirname, 'source/templates'));
 app.set('view engine', 'jade');
 
 app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(require('express-session')({
+  secret: 'sebastian',
+  resave: false,
+  saveUninitialized: false
+}));
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(__dirname + '/static'));
+app.use(express.static(path.join(__dirname, '/static')));
 
 app.use('/', routes);
 
