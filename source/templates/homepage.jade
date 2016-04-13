@@ -9,4 +9,6 @@ block content
     a(href="/register") Register
   if (user)
     p You are currently logged in as #{user.username}
+    a(href="/api/contacts") Contacts
+    br
     a(href="/logout") Logout

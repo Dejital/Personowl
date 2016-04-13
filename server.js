@@ -6,7 +6,8 @@ var express = require('express')
   , mongoose = require('mongoose')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
-  , routes = require('./routes/index');
+  , routes = require('./routes/index')
+  , api = require('./routes/api');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(passport.session());
 app.use(express.static(path.join(__dirname, '/static')));
 
 app.use('/', routes);
+app.use('/api', api);
 
 var Account = require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));

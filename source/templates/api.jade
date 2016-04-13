@@ -1,0 +1,17 @@
+extend default
+
+block content
+  a(href="/") Home
+  if (title)
+    span  » #{title}
+
+  if (contacts)
+    ul
+    for contact in contacts
+      li #{contact.name}
+
+  br
+
+  form(role='form', action="/api/contacts",method="post")
+    input(type='text', name="name", placeholder='Contact name')
+    button(type='submit') Save
