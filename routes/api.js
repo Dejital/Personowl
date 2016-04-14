@@ -2,9 +2,13 @@ var express = require('express')
   , router = express.Router()
   , Contact = require('../models/contact');
 
-// TODO: Authenticate
+var isAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+};
 
-router.get('/contacts', function(req, res) {
+router.get('/contacts', isAuthenticated, function(req, res) {
   Contact.find(function(err, contacts) {
     console.log(contacts);
     res.render(
@@ -14,7 +18,7 @@ router.get('/contacts', function(req, res) {
   });
 });
 
-router.post('/contacts', function(req, res) {
+router.post('/contacts', isAuthenticated, function(req, res) {
   new Contact({ name : req.body.name })
     .save(function(err, contact) {
       console.log(contact);
