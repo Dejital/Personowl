@@ -8,7 +8,9 @@ block content
     br
     a(href="/register") Register
   if (user)
-    p You are currently logged in as #{user.username}
+    p
+      | You are currently logged in as&nbsp;
+      b #{user.username}
     a(href="/api/contacts") Contacts
     br
     a(href="/logout") Logout

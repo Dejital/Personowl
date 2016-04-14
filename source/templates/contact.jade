@@ -1,7 +1,19 @@
 extend default
 
 block content
-  a(href="/") Home
-  span &nbsp;»&nbsp;
-  a(href="/api/contacts") Contacts
-  span &nbsp;» #{contact.name}
+  nav
+    a(href="/") Home
+    span &nbsp;»&nbsp;
+    a(href="/api/contacts") Contacts
+    span &nbsp;» #{contact.name}
+
+  h2 #{contact.name}
+
+  form(role='form', action="/api/contacts/#{contact.id}?_method=PUT",method="post")
+    label Name&nbsp;
+    input(type='text', name="name", value="#{contact.name}" placeholder='Contact name')
+    br
+    button(type='submit') Update
+
+  form(role='form', action="/api/contacts/#{contact.id}?_method=DELETE",method="post")
+    button(type='submit') Delete

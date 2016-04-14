@@ -37,4 +37,25 @@ router.post('/contacts', isAuthenticated, function(req, res) {
     });
 });
 
+router.put('/contacts/:id', isAuthenticated, function(req, res) {
+  var query = { "_id" : req.params.id };
+  var update = { name : req.body.name };
+  var options = { new: true };
+  Contact.findOneAndUpdate(query, update, options, function(err, contact){
+    console.log(contact);
+    res.render(
+      'contact',
+      { contact : contact }
+    );
+  });
+});
+
+router.delete('/contacts/:id', isAuthenticated, function(req, res) {
+  var query = { "_id" : req.params.id };
+  Contact.findOneAndRemove(query, function(err, contact){
+    console.log(contact);
+    res.redirect('/api/contacts');
+  });
+});
+
 module.exports = router;

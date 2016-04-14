@@ -1,9 +1,12 @@
 extend default
 
 block content
-  a(href="/") Home
-  if (title)
-    span  » #{title}
+  nav
+    a(href="/") Home
+    if (title)
+      span  » #{title}
+
+  h2 Contacts
 
   if (contacts)
     ul

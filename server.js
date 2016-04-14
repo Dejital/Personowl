@@ -7,13 +7,15 @@ var express = require('express')
   , passport = require('passport')
   , LocalStrategy = require('passport-local').Strategy
   , routes = require('./routes/index')
-  , api = require('./routes/api');
+  , api = require('./routes/api')
+  , methodOverride = require('method-override');
 
 var app = express();
 
 app.set('views', path.join(__dirname, 'source/templates'));
 app.set('view engine', 'jade');
 
+app.use(methodOverride('_method'));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
