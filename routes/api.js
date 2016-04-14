@@ -18,6 +18,17 @@ router.get('/contacts', isAuthenticated, function(req, res) {
   });
 });
 
+router.get('/contacts/:id', isAuthenticated, function(req, res) {
+  var query = { "_id" : req.params.id };
+  Contact.findOne(query, function(err, contact) {
+    console.log(contact);
+    res.render(
+      'contact',
+      { contact : contact }
+    );
+  });
+});
+
 router.post('/contacts', isAuthenticated, function(req, res) {
   new Contact({ name : req.body.name })
     .save(function(err, contact) {

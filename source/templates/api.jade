@@ -8,7 +8,8 @@ block content
   if (contacts)
     ul
     for contact in contacts
-      li #{contact.name}
+      li
+        a(href="/api/contacts/#{contact.id}") #{contact.name}
 
   br
 
