@@ -58,4 +58,15 @@ router.delete('/contacts/:id', isAuthenticated, function(req, res) {
   });
 });
 
+router.post('/contacts/:id/interactions', isAuthenticated, function(req, res) {
+  Contact.findByIdAndUpdate(req.params.id, {
+    $push: {
+      interactions: { description: req.body.description }
+    }
+  }, {}, function(err, contact){
+    console.log(contact);
+    res.redirect('/api/contacts/' + req.params.id);
+  });
+});
+
 module.exports = router;

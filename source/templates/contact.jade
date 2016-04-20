@@ -17,3 +17,16 @@ block content
 
   form(role='form', action="/api/contacts/#{contact.id}?_method=DELETE",method="post")
     button(type='submit') Delete
+
+  h3 Interactions
+
+  if (contact.interactions)
+    ul
+    for interaction in contact.interactions
+      li #{interaction.description}
+
+  br
+
+  form(role='form', action="/api/contacts/#{contact.id}/interactions",method="post")
+    input(type='text', name="description", placeholder='Interaction description')
+    button(type='submit') Save
