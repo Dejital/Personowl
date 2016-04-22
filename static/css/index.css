@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Karla");
+@import url("http://yui.yahooapis.com/pure/0.6.0/pure-min.css");
 body {
   font-family: 'Karla', monospace;
   -webkit-font-smoothing: antialiased;

@@ -18,10 +18,11 @@ block content
     label Tags&nbsp;
     input(type='text', name="tags", value="#{contact.tags}" placeholder='Enter tags')
     br
-    button(type='submit') Update
+    button(type='submit').pure-button Update
 
   form(role='form', action="/api/contacts/#{contact.id}?_method=DELETE",method="post")
-    button(type='submit') Delete
+    span &nbsp;
+    button(type='submit').pure-button Delete
 
   h3 Notes
 
@@ -30,13 +31,13 @@ block content
     for note in contact.notes
       li #{note.body}&nbsp;
         form(role='form', action="/api/contacts/#{contact.id}/notes/#{note.id}?_method=DELETE",method="post")
-          button(type='submit') x
+          button(type='submit').pure-button x
 
     br
 
   form(role='form', action="/api/contacts/#{contact.id}/notes",method="post")
     input(type='text', name="body", placeholder='Enter a note')
-    button(type='submit') Add
+    button(type='submit').pure-button Add
 
   h3 Interactions
 
@@ -45,10 +46,10 @@ block content
     for interaction in contact.interactions
       li #{interaction.description}&nbsp;
         form(role='form', action="/api/contacts/#{contact.id}/interactions/#{interaction.id}?_method=DELETE",method="post")
-          button(type='submit') x
+          button(type='submit').pure-button x
 
     br
 
   form(role='form', action="/api/contacts/#{contact.id}/interactions",method="post")
     input(type='text', name="description", placeholder='Interaction description')
-    button(type='submit') Add
+    button(type='submit').pure-button Add
