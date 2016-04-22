@@ -4,6 +4,12 @@ var mongoose = require('mongoose')
 var Contact = new Schema({
   name: String,
   account: { type: Schema.ObjectId, ref: 'Account' },
+  tags: [String],
+  notes: [{
+    body: { type: String, default: '' },
+    account: { type: Schema.ObjectId, ref: 'Account' },
+    createdAt: { type: Date, default: Date.now }
+  }],
   interactions: [{
     description: { type: String, default: '' },
     account: { type: Schema.ObjectId, ref: 'Account' },
@@ -11,16 +17,5 @@ var Contact = new Schema({
   }],
   createdAt: { type: Date, default: Date.now }
 });
-
-Contact.methods = {
-  addInteraction: function (account, interaction) {
-    this.interactions.push({
-      description: interaction.description,
-      account: account
-    });
-
-    return this.save();
-  }
-};
 
 module.exports = mongoose.model('Contact', Contact);

@@ -39,7 +39,7 @@ router.post('/contacts', isAuthenticated, function(req, res) {
 
 router.put('/contacts/:id', isAuthenticated, function(req, res) {
   var query = { "_id" : req.params.id };
-  var update = { name : req.body.name };
+  var update = { name : req.body.name, tags : req.body.tags };
   var options = { new: true };
   Contact.findOneAndUpdate(query, update, options, function(err, contact){
     console.log(contact);
@@ -62,6 +62,17 @@ router.post('/contacts/:id/interactions', isAuthenticated, function(req, res) {
   Contact.findByIdAndUpdate(req.params.id, {
     $push: {
       interactions: { description: req.body.description }
+    }
+  }, {}, function(err, contact){
+    console.log(contact);
+    res.redirect('/api/contacts/' + req.params.id);
+  });
+});
+
+router.post('/contacts/:id/notes', isAuthenticated, function(req, res) {
+  Contact.findByIdAndUpdate(req.params.id, {
+    $push: {
+      notes: { body: req.body.body }
     }
   }, {}, function(err, contact){
     console.log(contact);

@@ -9,24 +9,42 @@ block content
 
   h2 #{contact.name}
 
+  h3 Profile
+
   form(role='form', action="/api/contacts/#{contact.id}?_method=PUT",method="post")
     label Name&nbsp;
     input(type='text', name="name", value="#{contact.name}" placeholder='Contact name')
+    br
+    label Tags&nbsp;
+    input(type='text', name="tags", value="#{contact.tags}" placeholder='Enter tags')
     br
     button(type='submit') Update
 
   form(role='form', action="/api/contacts/#{contact.id}?_method=DELETE",method="post")
     button(type='submit') Delete
 
+  h3 Notes
+
+  if (contact.notes.length > 0)
+    ul
+    for interaction in contact.notes
+      li #{interaction.body}
+
+    br
+
+  form(role='form', action="/api/contacts/#{contact.id}/notes",method="post")
+    input(type='text', name="body", placeholder='Enter a note')
+    button(type='submit') Add
+
   h3 Interactions
 
-  if (contact.interactions)
+  if (contact.interactions.length > 0)
     ul
     for interaction in contact.interactions
       li #{interaction.description}
 
-  br
+    br
 
   form(role='form', action="/api/contacts/#{contact.id}/interactions",method="post")
     input(type='text', name="description", placeholder='Interaction description')
-    button(type='submit') Save
+    button(type='submit') Add
