@@ -27,8 +27,10 @@ block content
 
   if (contact.notes.length > 0)
     ul
-    for interaction in contact.notes
-      li #{interaction.body}
+    for note in contact.notes
+      li #{note.body}&nbsp;
+        form(role='form', action="/api/contacts/#{contact.id}/notes/#{note.id}?_method=DELETE",method="post")
+          button(type='submit') x
 
     br
 
@@ -41,7 +43,9 @@ block content
   if (contact.interactions.length > 0)
     ul
     for interaction in contact.interactions
-      li #{interaction.description}
+      li #{interaction.description}&nbsp;
+        form(role='form', action="/api/contacts/#{contact.id}/interactions/#{interaction.id}?_method=DELETE",method="post")
+          button(type='submit') x
 
     br
 

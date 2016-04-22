@@ -1,9 +1,11 @@
 extend default
 
 block content
-  p Hello World!
+
+  h2 Home
 
   if (!user)
+    p Manage your personal and business relationships with Personowl.
     a(href="/login") Login
     br
     a(href="/register") Register
@@ -14,3 +16,4 @@ block content
     a(href="/api/contacts") Contacts
     br
     a(href="/logout") Logout
+

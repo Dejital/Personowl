@@ -69,10 +69,32 @@ router.post('/contacts/:id/interactions', isAuthenticated, function(req, res) {
   });
 });
 
+router.delete('/contacts/:id/interactions/:interactionId', isAuthenticated, function(req, res) {
+  Contact.findByIdAndUpdate(req.params.id, {
+    $pull: {
+      interactions: { _id: req.params.interactionId }
+    }
+  }, {}, function(err, contact){
+    console.log(contact);
+    res.redirect('/api/contacts/' + req.params.id);
+  });
+});
+
 router.post('/contacts/:id/notes', isAuthenticated, function(req, res) {
   Contact.findByIdAndUpdate(req.params.id, {
     $push: {
       notes: { body: req.body.body }
+    }
+  }, {}, function(err, contact){
+    console.log(contact);
+    res.redirect('/api/contacts/' + req.params.id);
+  });
+});
+
+router.delete('/contacts/:id/notes/:noteId', isAuthenticated, function(req, res) {
+  Contact.findByIdAndUpdate(req.params.id, {
+    $pull: {
+      notes: { _id: req.params.noteId }
     }
   }, {}, function(err, contact){
     console.log(contact);
