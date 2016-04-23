@@ -11,18 +11,18 @@ block content
 
   h3 Profile
 
-  form(role='form', action="/api/contacts/#{contact.id}?_method=PUT",method="post")
-    label Name&nbsp;
-    input(type='text', name="name", value="#{contact.name}" placeholder='Contact name')
-    br
-    label Tags&nbsp;
-    input(type='text', name="tags", value="#{contact.tags}" placeholder='Enter tags')
-    br
-    button(type='submit').pure-button Update
+  form.pure-form.pure-form-aligned(role='form', action="/api/contacts/#{contact.id}?_method=PUT",method="post")
+    fieldset
+      div.pure-control-group
+        label(for='name') Name
+        input(id='name', type='text', name='name', value="#{contact.name}" placeholder='Contact name')
 
-  form(role='form', action="/api/contacts/#{contact.id}?_method=DELETE",method="post")
-    span &nbsp;
-    button(type='submit').pure-button Delete
+      div.pure-control-group
+        label(for='tags') Tags
+        input(id='tags', type='text', name='tags', value='#{contact.tags}' placeholder='Enter tags')
+
+      div.pure-controls
+        button.pure-button.pure-button-primary(type='submit') Update
 
   h3 Notes
 
@@ -31,13 +31,14 @@ block content
     for note in contact.notes
       li #{note.body}&nbsp;
         form(role='form', action="/api/contacts/#{contact.id}/notes/#{note.id}?_method=DELETE",method="post")
-          button(type='submit').pure-button x
+          button(type='submit').pure-button.button-warning.button-xsmall.button-rounded X
 
     br
 
-  form(role='form', action="/api/contacts/#{contact.id}/notes",method="post")
-    input(type='text', name="body", placeholder='Enter a note')
-    button(type='submit').pure-button Add
+  form.pure-form(role='form', action="/api/contacts/#{contact.id}/notes",method="post")
+    fieldset
+      input(id='note', type='text', name='body', placeholder='Enter a note')
+      button(type='submit').pure-button.pure-button-primary Add
 
   h3 Interactions
 
@@ -46,10 +47,16 @@ block content
     for interaction in contact.interactions
       li #{interaction.description}&nbsp;
         form(role='form', action="/api/contacts/#{contact.id}/interactions/#{interaction.id}?_method=DELETE",method="post")
-          button(type='submit').pure-button x
+          button(type='submit').pure-button.button-warning.button-xsmall.button-rounded X
 
     br
 
-  form(role='form', action="/api/contacts/#{contact.id}/interactions",method="post")
-    input(type='text', name="description", placeholder='Interaction description')
-    button(type='submit').pure-button Add
+  form.pure-form(role='form', action="/api/contacts/#{contact.id}/interactions",method="post")
+    fieldset
+      input(id='interaction', type='text', name="description", placeholder='Interaction description')
+      button(type='submit').pure-button.pure-button-primary Add
+
+  h3 Actions
+
+  form(role='form', action="/api/contacts/#{contact.id}?_method=DELETE",method="post")
+    button.pure-button.button-warning(type='submit') Delete

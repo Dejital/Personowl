@@ -16,6 +16,7 @@ block content
 
   br
 
-  form(role='form', action="/api/contacts",method="post")
-    input(type='text', name="name", placeholder='Contact name')
-    button(type='submit').pure-button Save
+  form.pure-form(role='form', action="/api/contacts",method="post")
+    fieldset
+      input(id='name', type='text', name="name", placeholder='Contact name')
+      button(type='submit').pure-button.pure-button-primary Add

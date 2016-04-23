@@ -6,14 +6,14 @@ block content
 
   if (!user)
     p Manage your personal and business relationships with Personowl.
-    a(href="/login") Login
-    br
-    a(href="/register") Register
+    a(href="/login").pure-button Login
+    span &nbsp;
+    a(href="/register").pure-button Register
   if (user)
     p
       | You are currently logged in as&nbsp;
       b #{user.username}
-    a(href="/api/contacts") Contacts
-    br
-    a(href="/logout") Logout
+    a(href="/api/contacts").pure-button Contacts
+    span &nbsp;
+    a(href="/logout").pure-button Logout
 

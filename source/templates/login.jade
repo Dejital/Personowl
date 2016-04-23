@@ -3,12 +3,15 @@ extend default
 block content
     h2 Login
 
-    form(role='form', action="/login",method="post")
-        input(type='text', name="username", placeholder='Enter Username')
-        br
-        input(type='password', name="password", placeholder='Password')
-        br
-        button.pure-button(type='submit') Submit
+    form.pure-form.pure-form-stacked(role='form', action="/login",method="post")
+
+        label(for='username') Username
+        input(id='username', type='text', name='username', placeholder='Username')
+
+        label(for='password') Password
+        input(id='password', type='password', name='password', placeholder='Password')
+
+        button.pure-button.pure-button-primary(type='submit') Submit
         span &nbsp;
         a(href='/')
             button(type="button").pure-button Cancel
