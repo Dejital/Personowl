@@ -9,7 +9,8 @@ var isAuthenticated = function(req, res, next) {
 };
 
 router.get('/contacts', isAuthenticated, function(req, res) {
-  Contact.find(function(err, contacts) {
+  var query = { "account" : req.user._id };
+  Contact.find(query, function(err, contacts) {
     console.log(contacts);
     res.render(
       'api',
@@ -30,7 +31,7 @@ router.get('/contacts/:id', isAuthenticated, function(req, res) {
 });
 
 router.post('/contacts', isAuthenticated, function(req, res) {
-  new Contact({ name : req.body.name })
+  new Contact({ name : req.body.name, account: req.user._id })
     .save(function(err, contact) {
       console.log(contact);
       res.redirect('/api/contacts');
@@ -61,7 +62,7 @@ router.delete('/contacts/:id', isAuthenticated, function(req, res) {
 router.post('/contacts/:id/interactions', isAuthenticated, function(req, res) {
   Contact.findByIdAndUpdate(req.params.id, {
     $push: {
-      interactions: { description: req.body.description }
+      interactions: { description: req.body.description, account: req.user._id }
     }
   }, {}, function(err, contact){
     console.log(contact);
@@ -83,7 +84,7 @@ router.delete('/contacts/:id/interactions/:interactionId', isAuthenticated, func
 router.post('/contacts/:id/notes', isAuthenticated, function(req, res) {
   Contact.findByIdAndUpdate(req.params.id, {
     $push: {
-      notes: { body: req.body.body }
+      notes: { body: req.body.body, account: req.user._id }
     }
   }, {}, function(err, contact){
     console.log(contact);
