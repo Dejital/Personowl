@@ -9,10 +9,18 @@ block content
   h2 Contacts
 
   if (contacts)
-    ul
-    for contact in contacts
-      li
-        a(href="/api/contacts/#{contact.id}") #{contact.name}
+    ul.contacts-list
+      for contact in contacts
+        li
+          a(href="/api/contacts/#{contact.id}") #{contact.name}
+          if (contact.tags.length > 0)
+            br
+            span.contacts-tag #{contact.tags}
+          br
+          if (contact.lastContactAt)
+            span.contacts-date Last contact #{moment(contact.lastContactAt).fromNow()}
+          else
+            span.contacts-date Last contact never
 
   br
 

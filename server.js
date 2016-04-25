@@ -8,7 +8,8 @@ var express = require('express')
   , LocalStrategy = require('passport-local').Strategy
   , routes = require('./routes/index')
   , api = require('./routes/api')
-  , methodOverride = require('method-override');
+  , methodOverride = require('method-override')
+  , moment = require('moment');
 
 var app = express();
 
@@ -31,6 +32,8 @@ app.use(express.static(path.join(__dirname, '/static')));
 
 app.use('/', routes);
 app.use('/api', api);
+
+app.locals.moment = moment;
 
 var Account = require('./models/account');
 passport.use(new LocalStrategy(Account.authenticate()));

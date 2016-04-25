@@ -10,7 +10,8 @@ var isAuthenticated = function(req, res, next) {
 
 router.get('/contacts', isAuthenticated, function(req, res) {
   var query = { "account" : req.user._id };
-  Contact.find(query, function(err, contacts) {
+  var fields = 'name tags lastContactAt';
+  Contact.find(query, fields, function(err, contacts) {
     console.log(contacts);
     res.render(
       'api',
@@ -60,10 +61,11 @@ router.delete('/contacts/:id', isAuthenticated, function(req, res) {
 });
 
 router.post('/contacts/:id/interactions', isAuthenticated, function(req, res) {
+  var today = Date.now();
   Contact.findByIdAndUpdate(req.params.id, {
     $push: {
       interactions: { description: req.body.description, account: req.user._id }
-    }
+    }, lastContactAt: today
   }, {}, function(err, contact){
     console.log(contact);
     res.redirect('/api/contacts/' + req.params.id);

@@ -15,7 +15,8 @@ var Contact = new Schema({
     account: { type: Schema.ObjectId, ref: 'Account' },
     createdAt: { type: Date, default: Date.now }
   }],
-  createdAt: { type: Date, default: Date.now }
+  createdAt: { type: Date, default: Date.now },
+  lastContactAt: { type: Date }
 });
 
 module.exports = mongoose.model('Contact', Contact);

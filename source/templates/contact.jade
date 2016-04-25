@@ -21,6 +21,13 @@ block content
         label(for='tags') Tags
         input(id='tags', type='text', name='tags', value='#{contact.tags}' placeholder='Enter tags')
 
+      div.pure-control-group
+        label(for='tags') Last Contact
+        if (contact.lastContactAt)
+          span #{moment(contact.lastContactAt).format('MM/DD/YYYY')}
+        else
+          span Never
+
       div.pure-controls
         button.pure-button.pure-button-primary(type='submit') Update
 
