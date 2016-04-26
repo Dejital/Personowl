@@ -19,7 +19,7 @@ block content
 
       div.pure-control-group
         label(for='tags') Tags
-        input(id='tags', type='text', name='tags', value='#{contact.tags}' placeholder='Enter tags')
+        input(id='tags', type='text', name='tags', value='#{contact.tags.join(",")}' placeholder='Enter tags')
 
       div.pure-control-group
         label(for='tags') Last Contact

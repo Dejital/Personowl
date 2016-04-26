@@ -41,7 +41,8 @@ router.post('/contacts', isAuthenticated, function(req, res) {
 
 router.put('/contacts/:id', isAuthenticated, function(req, res) {
   var query = { "_id" : req.params.id };
-  var update = { name : req.body.name, tags : req.body.tags };
+  var tags = req.body.tags.split(',');
+  var update = { name : req.body.name, tags : tags };
   var options = { new: true };
   Contact.findOneAndUpdate(query, update, options, function(err, contact){
     console.log(contact);
