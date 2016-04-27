@@ -9,7 +9,8 @@ var express = require('express')
   , routes = require('./routes/index')
   , api = require('./routes/api')
   , methodOverride = require('method-override')
-  , moment = require('moment');
+  , moment = require('moment')
+  , flash = require('connect-flash');
 
 var app = express();
 
@@ -27,6 +28,7 @@ app.use(require('express-session')({
   saveUninitialized: false
 }));
 app.use(passport.initialize());
+app.use(flash());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, '/static')));
 
