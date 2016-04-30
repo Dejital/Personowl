@@ -13,10 +13,12 @@ router.get('/contacts', isAuthenticated, function(req, res) {
   var fields = 'name tags lastContactAt';
   Contact.find(query, fields, function(err, contacts) {
     console.log(contacts);
-    res.render(
-      'api',
-      { title : 'Contacts', contacts : contacts }
-    );
+    res.status(200)
+      .json({
+        status: 'success',
+        contacts: contacts,
+        message: 'Retrieve ALL contacts'
+      });
   });
 });
 
@@ -35,7 +37,7 @@ router.post('/contacts', isAuthenticated, function(req, res) {
   new Contact({ name : req.body.name, account: req.user._id })
     .save(function(err, contact) {
       console.log(contact);
-      res.redirect('/api/contacts');
+      res.redirect('/contacts');
     });
 });
 
@@ -57,7 +59,7 @@ router.delete('/contacts/:id', isAuthenticated, function(req, res) {
   var query = { "_id" : req.params.id };
   Contact.findOneAndRemove(query, function(err, contact){
     console.log(contact);
-    res.redirect('/api/contacts');
+    res.redirect('/contacts');
   });
 });
 

@@ -3,6 +3,12 @@ var express = require('express')
   , Account = require('../models/account')
   , router = express.Router();
 
+var isAuthenticated = function(req, res, next) {
+  if (req.isAuthenticated())
+    return next();
+  res.redirect('/login');
+};
+
 router.get('/', function (req, res) {
   res.render('homepage', { user : req.user });
 });
@@ -16,7 +22,6 @@ router.post('/register', function (req, res) {
     if (err) {
       return res.render('register', { info: err.message });
     }
-
     passport.authenticate('local')(req, res, function () {
       req.session.save(function (err) {
         if (err) {
@@ -52,6 +57,10 @@ router.get('/logout', function (req, res) {
     }
     res.redirect('/');
   });
+});
+
+router.get('/contacts', isAuthenticated, function(req, res) {
+  res.render('contacts', { });
 });
 
 module.exports = router;

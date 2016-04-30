@@ -1,0 +1,30 @@
+extend default
+
+block content
+
+  div(ng-app='app', ng-controller='contactsController as vm')
+
+    nav
+      a(href="/") Home
+      span &nbsp;» Contacts
+
+    h2 Contacts
+
+    ul(ng-show='!vm.isBusy').contacts-list
+      li(ng-repeat='contact in vm.contacts')
+        a(ng-href='/api/contacts/{{contact._id}}') {{contact.name}}
+        div(ng-if='contact.tags.length > 0')
+          span(ng-repeat='tag in contact.tags').contacts-tag {{tag}}
+        span.contacts-date Last contact {{contact.lastContactMessage}}
+
+    br
+
+    form.pure-form(role='form', action="/api/contacts",method="post")
+      fieldset
+        input(id='name', type='text', name="name", placeholder='Contact name')
+        button(type='submit').pure-button.pure-button-primary Add
+
+  script(src='//code.jquery.com/jquery-2.2.1.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js')
+  script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js')
+  script(src='/js/app.js')
