@@ -12,10 +12,10 @@ block content
 
     ul(ng-show='!vm.isBusy').contacts-list
       li(ng-repeat='contact in vm.contacts')
-        a(ng-href='/api/contacts/{{contact._id}}') {{contact.name}}
+        a(ng-href='/api/contacts/{{contact._id}}' ng-bind='contact.name')
         div(ng-if='contact.tags.length > 0')
-          span(ng-repeat='tag in contact.tags').contacts-tag {{tag}}
-        span.contacts-date Last contact {{contact.lastContactMessage}}
+          span(ng-repeat='tag in contact.tags' ng-bind='tag').contacts-tag
+        span(ng-bind='contact.lastContactMessage').contacts-date
 
     br
 

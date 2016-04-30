@@ -26,10 +26,11 @@
 
     function setContactDates(){
       angular.forEach(vm.contacts, function(contact) {
+        contact.lastContactMessage = 'Last contact ';
         if (contact.lastContactAt)
-          contact.lastContactMessage = moment(contact.lastContactAt).fromNow();
+          contact.lastContactMessage += moment(contact.lastContactAt).fromNow();
         else
-          contact.lastContactMessage = 'never';
+          contact.lastContactMessage += 'never';
       });
     }
 
