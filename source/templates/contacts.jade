@@ -17,6 +17,9 @@ block content
           span(ng-repeat='tag in contact.tags' ng-bind='tag').contacts-tag
         span(ng-bind='contact.lastContactMessage').contacts-date
 
+    ul(ng-show='vm.isBusy').contacts-list
+      p Loading...
+
     br
 
     form.pure-form(role='form', action="/api/contacts",method="post")
