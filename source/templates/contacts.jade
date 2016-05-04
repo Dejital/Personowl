@@ -10,8 +10,12 @@ block content
 
     h2 Contacts
 
+    form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 4')
+      fieldset
+        input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts')
+
     ul(ng-show='!vm.isBusy').contacts-list
-      li(ng-repeat='contact in vm.contacts')
+      li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery')
         a(ng-href='/api/contacts/{{contact._id}}' ng-bind='contact.name')
         div(ng-if='contact.tags.length > 0')
           span(ng-repeat='tag in contact.tags' ng-bind='tag').contacts-tag
@@ -22,10 +26,10 @@ block content
 
     br
 
-    form.pure-form(role='form', action="/api/contacts",method="post")
+    form.pure-form(role='form', ng-submit='vm.addContact()')
       fieldset
-        input(id='name', type='text', name="name", placeholder='Contact name')
-        button(type='submit').pure-button.pure-button-primary Add
+        input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
+        button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add
 
   script(src='//code.jquery.com/jquery-2.2.1.min.js')
   script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js')
