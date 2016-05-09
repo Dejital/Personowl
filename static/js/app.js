@@ -2,7 +2,18 @@
 
   'use strict';
 
-  angular.module('app', [])
+  angular.module('app', ['ngRoute'])
+    .config(function($routeProvider) {
+
+      $routeProvider.when('/', {
+        controller: 'contactsController',
+        controllerAs: 'vm',
+        templateUrl: '/views/contactsListView.html'
+      });
+
+      $routeProvider.otherwise({ redirectTo: '/' });
+
+    })
     .controller('contactsController', contactsController);
 
   function contactsController($http) {

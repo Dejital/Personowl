@@ -2,37 +2,11 @@ extend default
 
 block content
 
-  div(ng-app='app', ng-controller='contactsController as vm')
-
-    nav
-      a(href="/") Home
-      span &nbsp;» Contacts
-
-    h2 Contacts
-
-    form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 4')
-      fieldset
-        input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts')
-
-    div(ng-show='!vm.isBusy')
-      ul.contacts-list
-        li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery')
-          a(ng-href='/api/contacts/{{contact._id}}' ng-bind='contact.name')
-          div(ng-if='contact.tags.length > 0')
-            span(ng-repeat='tag in contact.tags' ng-bind='tag').contacts-tag
-          span(ng-bind='contact.lastContactMessage').contacts-date
-
-      br
-
-      form.pure-form(role='form', ng-submit='vm.addContact()')
-        fieldset
-          input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
-          button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add
-
-    ul(ng-show='vm.isBusy').contacts-list
-      p Loading...
+  div(ng-app='app')
+    div(ng-view)
 
   script(src='//code.jquery.com/jquery-2.2.1.min.js')
   script(src='//cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.9/angular.min.js')
   script(src='//cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js')
+  script(src='//ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-route.js')
   script(src='/js/app.js')

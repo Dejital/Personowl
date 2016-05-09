@@ -7,9 +7,13 @@
   "scripts": {
     "build-css": "stylus source/stylesheets/index.styl -o static/css",
     "watch-css": "stylus source/stylesheets/index.styl -o static/css -w",
-    "clean": "rm -rf static/css && mkdir -p static/css",
-    "build": "npm run clean && npm run build-css",
-    "watch": "npm run clean && npm run watch-css & nodemon ./bin/www -e js,jade",
+    "clean-css": "rm -rf static/css && mkdir -p static/css",
+    "build-views": "jade source/views/* -o static/views",
+    "watch-views": "jade source/views/* -o static/views -w",
+    "clean-views": "rm -rf static/views && mkdir -p static/views",
+    "clean": "npm run clean-css",
+    "build": "npm run clean && npm run build-css && npm run build-views",
+    "watch": "npm run clean && npm run watch-css & npm run watch-views & nodemon ./bin/www -e js,jade",
     "start": "node ./bin/www"
   },
   "keywords": [],
