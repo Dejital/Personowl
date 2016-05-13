@@ -4,14 +4,14 @@ nav
 
 h2 Contacts
 
-form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 4')
+form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 0')
   fieldset
     input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts').contacts-list-filter
 
 div(ng-show='!vm.isBusy')
   ul.contacts-list
     li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery')
-      a(ng-href='/api/contacts/{{contact._id}}' ng-bind='contact.name')
+      a(ng-href='/contacts#/{{contact._id}}' ng-bind='contact.name')
       div(ng-if='contact.tags.length > 0')
         span(ng-repeat='tag in contact.tags' ng-bind='tag').contacts-tag
       span(ng-bind='contact.lastContactMessage').contacts-date

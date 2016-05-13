@@ -1,0 +1,59 @@
+nav
+  a(href="/") Home
+  span &nbsp;»&nbsp;
+  a(href="/contacts#/") Contacts
+  span(ng-bind="' » ' + vm.contact.name")
+
+h2(ng-bind="vm.contact.name")
+
+h3 Profile
+
+form.pure-form.pure-form-aligned(role='form', ng-submit="vm.saveChanges()", novalidate)
+  fieldset
+    div.pure-control-group
+      label(for='name') Name
+      input(id='name', type='text', name='name', ng-model="vm.contact.name" placeholder='Contact name')
+
+    div.pure-control-group
+      label(for='tags') Tags
+      input(id='tags', type='text', name='tags', ng-model='vm.contact.tags' placeholder='Enter tags')
+
+    div.pure-control-group
+      label Last Contact
+      span(ng-bind='vm.contact.lastContactMessage')
+
+    div.pure-controls
+      button.pure-button.pure-button-primary(type='submit') Update
+
+h3 Notes
+
+ul
+  li(ng-repeat="note in vm.contact.notes")
+    span(ng-bind="note.body + ' '")
+    button(ng-click="vm.deleteNote(note)").pure-button.button-warning.button-xsmall.button-rounded X
+
+br
+
+form.pure-form(role='form', ng-submit="vm.addNote()", novalidate)
+  fieldset
+    input(id='note', type='text', name='body', ng-model='vm.newNote', placeholder='Enter a note')
+    button(type='submit').pure-button.pure-button-primary Add
+
+h3 Interactions
+
+ul
+  li(ng-repeat="interaction in vm.contact.interactions")
+    span(ng-bind="interaction.description + ' '")
+    button(ng-click="vm.deleteInteraction(interaction)").pure-button.button-warning.button-xsmall.button-rounded X
+
+br
+
+form.pure-form(role='form', ng-submit="vm.addInteraction()", novalidate)
+  fieldset
+    input(id='interaction', type='text', name="description", ng-model='vm.newInteraction', placeholder='Interaction description')
+    button(type='submit').pure-button.pure-button-primary Add
+
+h3 Actions
+
+form(role='form', ng-submit="vm.deleteContact()")
+  button.pure-button.button-warning(type='submit') Delete
