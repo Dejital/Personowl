@@ -61,6 +61,10 @@
         });
     };
 
+    vm.filterByTag = function(tag) {
+      vm.contactQuery = tag;
+    };
+
     function setContactDates(){
       angular.forEach(vm.contacts, function(contact) {
         if (!contact.lastContactMessage){
