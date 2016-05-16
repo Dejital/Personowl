@@ -2,9 +2,9 @@ nav
   a(href="/") Home
   span &nbsp;»&nbsp;
   a(href="/contacts#/") Contacts
-  span(ng-bind="' » ' + vm.contact.name")
+  span(ng-bind="' » ' + (vm.contact.name || '[no name]')")
 
-h2(ng-bind="vm.contact.name")
+h2(ng-bind="vm.contact.name || '[no name]'")
 
 h3 Profile
 
@@ -29,7 +29,7 @@ h3 Notes
 
 ul
   li(ng-repeat="note in vm.contact.notes")
-    span(ng-bind="note.body + ' '")
+    span(ng-bind="(note.body || '[no note]') + ' '")
     button(ng-click="vm.deleteNote(note)").pure-button.button-warning.button-xsmall.button-rounded X
 
 br
@@ -43,7 +43,7 @@ h3 Interactions
 
 ul
   li(ng-repeat="interaction in vm.contact.interactions")
-    span(ng-bind="interaction.description + ' '")
+    span(ng-bind="(interaction.description || '[no description]') + ' '")
     button(ng-click="vm.deleteInteraction(interaction)").pure-button.button-warning.button-xsmall.button-rounded X
 
 br

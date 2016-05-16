@@ -6,7 +6,7 @@
     .config(function($routeProvider) {
 
       $routeProvider.when('/', {
-        controller: 'contactsController',
+        controller: 'contactListController',
         controllerAs: 'vm',
         templateUrl: '/views/contactsListView.html'
       });
@@ -20,10 +20,10 @@
       $routeProvider.otherwise({ redirectTo: '/' });
 
     })
-    .controller('contactsController', contactsController)
+    .controller('contactListController', contactListController)
     .controller('contactController', contactController);
 
-  function contactsController($http) {
+  function contactListController($http) {
 
     var vm = this;
 
