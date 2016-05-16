@@ -23,7 +23,7 @@
     .controller('contactListController', contactListController)
     .controller('contactController', contactController);
 
-  function contactListController($http) {
+  function contactListController($http, $filter, $location) {
 
     var vm = this;
 
@@ -63,6 +63,14 @@
 
     vm.filterByTag = function(tag) {
       vm.contactQuery = tag;
+    };
+
+    vm.selectTopContact = function() {
+      var filtered = $filter('filter')(vm.contacts, vm.contactQuery);
+      if (filtered.length > 0){
+        var contact = filtered[0];
+        $location.path('/' + contact._id);
+      }
     };
 
     function setContactDates(){

@@ -4,7 +4,7 @@ nav
 
 h2 Contacts
 
-form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 0')
+form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 0', ng-submit='vm.selectTopContact()')
   fieldset
     input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts').contacts-list-filter
 
