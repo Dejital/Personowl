@@ -2,9 +2,9 @@ nav
   a(href="/") Home
   span &nbsp;»&nbsp;
   a(href="/contacts#/") Contacts
-  span(ng-bind="' » ' + (vm.contact.name || '[no name]')")
+  span(ng-bind="' » ' + vm.contact.displayName")
 
-h2(ng-bind="vm.contact.name || '[no name]'")
+h2(ng-bind="vm.contact.displayName")
 
 h3 Profile
 
@@ -23,14 +23,14 @@ form.pure-form.pure-form-aligned(role='form', ng-submit="vm.saveChanges()", nova
       span(ng-bind='vm.contact.lastContactMessage')
 
     div.pure-controls
-      button.pure-button.pure-button-primary(type='submit') Update
+      button.pure-button.pure-button-primary(type='submit', ng-disabled='vm.isSaving') Update
 
 h3 Notes
 
-ul
-  li(ng-repeat="note in vm.contact.notes")
-    span(ng-bind="(note.body || '[no note]') + ' '")
-    button(ng-click="vm.deleteNote(note)").pure-button.button-warning.button-xsmall.button-rounded X
+div.note(ng-repeat="note in vm.contact.notes")
+  span(ng-bind="note.body || '[no note]'")
+  span &nbsp;&nbsp;
+  a(ng-click="vm.deleteNote(note)") x
 
 br
 
@@ -41,10 +41,13 @@ form.pure-form(role='form', ng-submit="vm.addNote()", novalidate)
 
 h3 Interactions
 
-ul
-  li(ng-repeat="interaction in vm.contact.interactions")
-    span(ng-bind="(interaction.description || '[no description]') + ' '")
-    button(ng-click="vm.deleteInteraction(interaction)").pure-button.button-warning.button-xsmall.button-rounded X
+div.interaction(ng-repeat="interaction in vm.contact.interactions")
+  b
+    span(ng-bind="interaction.displayDescription")
+  br
+  span(ng-bind="interaction.displayDate")
+  span &nbsp;&nbsp;&nbsp;&nbsp;
+  a(ng-click="vm.deleteInteraction(interaction)") Delete
 
 br
 

@@ -155,7 +155,8 @@
       var data = { interaction: vm.newInteraction };
       $http.post(url, data)
         .then(function(response) {
-          angular.copy(response.data.interactions, vm.contact.interactions);
+          var interactions = formatInteractions(response.data.interactions);
+          angular.copy(interactions, vm.contact.interactions);
           vm.newInteraction = '';
         }, function() {
           vm.errorMessage = 'Failed to add a new interaction.';
@@ -166,7 +167,8 @@
       var url = '/api/contacts/' + id + '/interactions/' + interaction._id + '?_method=DELETE';
       $http.post(url, vm.contact)
         .then(function (response) {
-          angular.copy(response.data.interactions, vm.contact.interactions);
+          var interactions = formatInteractions(response.data.interactions);
+          angular.copy(interactions, vm.contact.interactions);
         }, function (error) {
           vm.errorMessage = 'Failed to delete interaction. ';
           vm.errorMessage += error;
@@ -186,15 +188,25 @@
 
     function setContact(contact) {
       contact.tags = contact.tags.join(',');
-      contact.lastContactMessage = getFormattedDate(contact.lastContactAt);
+      contact.lastContactMessage = getRelativeDateText(contact.lastContactAt);
+      contact.displayName = contact.name || '[no name]';
+      contact.interactions = formatInteractions(contact.interactions);
       angular.copy(contact, vm.contact);
     }
 
-    function getFormattedDate(lastContactAt){
-      if (lastContactAt)
-        return moment(lastContactAt).fromNow();
+    function getRelativeDateText(date){
+      if (date)
+        return moment(date).fromNow();
       else
         return 'Never';
+    }
+
+    function formatInteractions(interactions) {
+      angular.forEach(interactions, function(interaction) {
+        interaction.displayDescription = interaction.description || '[no description]';
+        interaction.displayDate = getRelativeDateText(interaction.createdAt);
+      });
+      return interactions;
     }
 
   }
