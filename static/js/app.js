@@ -37,11 +37,12 @@
     $http.get('/api/contacts')
       .then(function(response) {
         angular.copy(response.data.contacts, vm.contacts);
+        setContactDates();
+        setContactFlags();
       }, function(error) {
         vm.errorMessage = 'Failed to load contacts data. ' + error;
       })
       .finally(function() {
-        setContactDates();
         vm.isBusy = false;
       });
 
@@ -52,11 +53,11 @@
         .then(function(response) {
           vm.contacts.push(response.data.contact);
           vm.newContact = {};
+          setContactDates();
         }, function() {
           vm.errorMessage = 'Failed to add new contact.';
         })
         .finally(function () {
-          setContactDates();
           vm.isAddingContact = false;
         });
     };
@@ -82,6 +83,15 @@
           else
             contact.lastContactMessage += 'never';
         }
+      });
+    }
+
+    function setContactFlags() {
+      var now = moment();
+      var threshold = 30;
+      angular.forEach(vm.contacts, function(contact) {
+        if (now.diff(contact.lastContactAt, 'days') > threshold)
+          contact.expired = true;
       });
     }
 
