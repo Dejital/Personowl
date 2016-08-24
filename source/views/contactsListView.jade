@@ -14,6 +14,8 @@ div(ng-show='!vm.isBusy')
       a(ng-href='/contacts#/{{contact._id}}' ng-bind='contact.name || "[no name]"')
       div(ng-if='contact.tags.length > 0')
         span(ng-repeat='tag in contact.tags' ng-bind='tag', ng-click='vm.filterByTag(tag)').contacts-tag
+      span.contacts-actions
+        a(ng-click='vm.checkIn(contact)') check-in
       span(ng-bind='contact.lastContactMessage' ng-class='{expired: contact.expired}').contacts-date
 
   br

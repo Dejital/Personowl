@@ -1,9 +1,9 @@
-(function() {
+(function () {
 
   'use strict';
 
   angular.module('app', ['ngRoute'])
-    .config(function($routeProvider) {
+    .config(function ($routeProvider) {
 
       $routeProvider.when('/', {
         controller: 'contactListController',
@@ -27,6 +27,30 @@
 
     var vm = this;
 
+    function setContactDates() {
+      angular.forEach(vm.contacts, function(contact) {
+        if (!contact.lastContactMessage) {
+          contact.lastContactMessage = 'Last contact ';
+          if (contact.lastContactAt) {
+            contact.lastContactDate = Date.parse(contact.lastContactDate);
+            contact.lastContactMessage += moment(contact.lastContactAt).fromNow();
+          } else {
+            contact.lastContactMessage += 'never';
+          }
+        }
+      });
+    }
+
+    function setContactFlags() {
+      var now = moment(),
+        threshold = 30;
+      angular.forEach(vm.contacts, function(contact) {
+        if (now.diff(contact.lastContactDate, 'days') > threshold) {
+          contact.expired = true;
+        }
+      });
+    }
+
     vm.contacts = [];
     vm.contactQuery = '';
     vm.errorMessage = '';
@@ -35,11 +59,11 @@
     vm.newContact = {};
 
     $http.get('/api/contacts')
-      .then(function(response) {
+      .then(function (response) {
         angular.copy(response.data.contacts, vm.contacts);
         setContactDates();
         setContactFlags();
-      }, function(error) {
+      }, function (error) {
         vm.errorMessage = 'Failed to load contacts data. ' + error;
       })
       .finally(function() {
@@ -68,32 +92,25 @@
 
     vm.selectTopContact = function() {
       var filtered = $filter('filter')(vm.contacts, vm.contactQuery);
-      if (filtered.length > 0){
+      if (filtered.length > 0) {
         var contact = filtered[0];
         $location.path('/' + contact._id);
       }
     };
 
-    function setContactDates(){
-      angular.forEach(vm.contacts, function(contact) {
-        if (!contact.lastContactMessage){
-          contact.lastContactMessage = 'Last contact ';
-          if (contact.lastContactAt)
-            contact.lastContactMessage += moment(contact.lastContactAt).fromNow();
-          else
-            contact.lastContactMessage += 'never';
-        }
-      });
-    }
-
-    function setContactFlags() {
-      var now = moment();
-      var threshold = 30;
-      angular.forEach(vm.contacts, function(contact) {
-        if (now.diff(contact.lastContactAt, 'days') > threshold)
-          contact.expired = true;
-      });
-    }
+    vm.checkIn = function(contact) {
+      var url = '/api/contacts/' + contact._id + '/interactions';
+      var data = { interaction: '' };
+      $http.post(url, data)
+        .then(function (response) {
+          var newInteraction = response.data.interactions[response.data.interactions.length - 1];
+          contact.lastContactAt = newInteraction.createdAt;
+          contact.lastContactMessage = 'Last contact a moment ago.';
+          contact.expired = false;
+        }, function () {
+          vm.errorMessage = 'Failed to add a new interaction.';
+        });
+    };
 
   }
 
@@ -149,7 +166,7 @@
         });
     };
 
-    vm.deleteNote = function(note) {
+    vm.deleteNote = function (note) {
       var url = '/api/contacts/' + id + '/notes/' + note._id + '?_method=DELETE';
       $http.post(url, vm.contact)
         .then(function (response) {
@@ -160,7 +177,7 @@
         });
     };
 
-    vm.addInteraction = function() {
+    vm.addInteraction = function () {
       var url = '/api/contacts/' + id + '/interactions';
       var data = { interaction: vm.newInteraction };
       $http.post(url, data)
@@ -173,7 +190,7 @@
         });
     };
 
-    vm.deleteInteraction = function(interaction) {
+    vm.deleteInteraction = function (interaction) {
       var url = '/api/contacts/' + id + '/interactions/' + interaction._id + '?_method=DELETE';
       $http.post(url, vm.contact)
         .then(function (response) {

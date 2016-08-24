@@ -59,15 +59,23 @@ ul.contacts-list {
 }
 .contacts-list .contacts-tag {
   padding: 0.2em 0.7em;
+  margin: 0.3em 0;
   margin-right: 2px;
   color: #fff;
   background: #999;
   font-size: 80%;
   cursor: pointer;
 }
-.contacts-list .contacts-date {
+.contacts-list .contacts-date,
+.contacts-list .contacts-actions {
   font-size: 80%;
   display: block;
+  margin: 0.3em 0;
+}
+.contacts-list .contacts-actions a {
+  cursor: pointer;
+  color: #555;
+  margin-right: 0.7em;
 }
 .contacts-list .expired {
   color: #ca3c3c;
