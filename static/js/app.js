@@ -121,6 +121,8 @@
       var url = '/api/contacts/' + contact._id + '?_method=PUT';
       $http.post(url, contact)
         .then(function (response) {
+          contact.snoozedUntilMessage = 'Snoozed until ';
+          contact.snoozedUntilMessage += moment(response.data.contact.snoozedUntil).format('MMMM Do YYYY');
         }, function (error) {
           vm.errorMessage = 'Failed to snooze contact. ';
           vm.errorMessage += error;
