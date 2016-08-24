@@ -6,7 +6,7 @@ h2 Contacts
 
 h4(ng-bind='vm.errorMessage' ng-if='vm.errorMessage').error-message
 
-form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.length > 0', ng-submit='vm.selectTopContact()')
+form.pure-form(role='form', name='contactsFilterForm', ng-if='vm.contacts.length > 0', ng-submit='vm.selectTopContact()')
   fieldset
     input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts').contacts-list-filter
 
@@ -21,6 +21,17 @@ div(ng-show='!vm.isBusy')
         a(ng-click='vm.snoozeContact(contact)') snooze
       span(ng-bind='contact.lastContactMessage' ng-class='{expired: contact.expired}').contacts-date
       span(ng-bind='contact.snoozedUntilMessage').contacts-date.expired
+
+  .tutorial(ng-if='vm.contacts.length === 0')
+    strong Add a contact below to get started.
+    p Use any name you want, like:
+    ul
+      li
+        i John Fante
+      li
+        i Arturo and Camilla
+      li
+        i New programmer from work
 
   br
 
