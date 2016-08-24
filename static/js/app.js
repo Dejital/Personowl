@@ -37,6 +37,10 @@
           } else {
             contact.lastContactMessage += 'never';
           }
+          if (contact.snoozedUntil) {
+            contact.snoozedUntilMessage = 'Snoozed until ';
+            contact.snoozedUntilMessage += moment(contact.snoozedUntil).format('MMMM Do YYYY');
+          }
         }
       });
     }
@@ -98,7 +102,7 @@
       }
     };
 
-    vm.checkIn = function(contact) {
+    vm.checkInContact = function (contact) {
       var url = '/api/contacts/' + contact._id + '/interactions';
       var data = { interaction: '' };
       $http.post(url, data)
@@ -109,6 +113,20 @@
           contact.expired = false;
         }, function () {
           vm.errorMessage = 'Failed to add a new interaction.';
+        });
+    };
+    
+    vm.snoozeContact = function (contact) {
+      contact.snoozedUntil = moment().add(7, 'days').toDate();
+      var url = '/api/contacts/' + contact._id + '?_method=PUT';
+      $http.post(url, contact)
+        .then(function (response) {
+        }, function (error) {
+          vm.errorMessage = 'Failed to snooze contact. ';
+          vm.errorMessage += error;
+        })
+        .finally(function () {
+          vm.isSaving = false;
         });
     };
 
@@ -218,6 +236,9 @@
       contact.lastContactMessage = getRelativeDateText(contact.lastContactAt);
       contact.displayName = contact.name || '[no name]';
       contact.interactions = formatInteractions(contact.interactions);
+      if (contact.snoozedUntil) {
+        contact.snoozedUntilMessage = moment(contact.snoozedUntil).format('MMMM Do YYYY');
+      }
       angular.copy(contact, vm.contact);
     }
 

@@ -67,15 +67,22 @@ ul.contacts-list {
   cursor: pointer;
 }
 .contacts-list .contacts-date,
-.contacts-list .contacts-actions {
+.contacts-list .contacts-actions,
+.contacts-list .contacts-tags {
   font-size: 80%;
   display: block;
   margin: 0.3em 0;
 }
-.contacts-list .contacts-actions a {
+.contacts-list .contacts-actions a,
+.contacts-list .contacts-tags a {
   cursor: pointer;
-  color: #555;
   margin-right: 0.7em;
+}
+.contacts-list .contacts-actions a {
+  color: #555;
+}
+.contacts-list .contacts-tags a {
+  color: #777;
 }
 .contacts-list .expired {
   color: #ca3c3c;
@@ -90,5 +97,8 @@ ul.contacts-list {
 .interaction a,
 .note a {
   cursor: pointer;
+  color: #ca3c3c;
+}
+.error-message {
   color: #ca3c3c;
 }

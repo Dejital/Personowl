@@ -22,6 +22,10 @@ form.pure-form.pure-form-aligned(role='form', ng-submit="vm.saveChanges()", nova
       label Last Contact
       span(ng-bind='vm.contact.lastContactMessage')
 
+    div.pure-control-group(ng-if="vm.contact.snoozedUntil")
+      label Snoozed Until
+      span(ng-bind='vm.contact.snoozedUntilMessage')
+
     div.pure-controls
       button.pure-button.pure-button-primary(type='submit', ng-disabled='vm.isSaving') Update
 

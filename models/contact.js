@@ -16,7 +16,8 @@ var Contact = new Schema({
     createdAt: { type: Date, default: Date.now }
   }],
   createdAt: { type: Date, default: Date.now },
-  lastContactAt: { type: Date }
+  lastContactAt: { type: Date },
+  snoozedUntil: { type: Date }
 });
 
 module.exports = mongoose.model('Contact', Contact);

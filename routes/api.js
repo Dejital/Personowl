@@ -10,7 +10,7 @@ var isAuthenticated = function(req, res, next) {
 
 router.get('/contacts', isAuthenticated, function(req, res) {
   var query = { "account" : req.user._id };
-  var fields = 'name tags lastContactAt';
+  var fields = 'name tags lastContactAt snoozedUntil';
   Contact.find(query, fields, function(err, contacts) {
     res.status(200)
       .json({
@@ -48,8 +48,15 @@ router.post('/contacts', isAuthenticated, function(req, res) {
 
 router.put('/contacts/:id', isAuthenticated, function(req, res) {
   var query = { "_id" : req.params.id };
-  var tags = req.body.tags.split(',');
-  var update = { name : req.body.name, tags : tags };
+  var update = { name : req.body.name };
+  if (Array.isArray(req.body.tags)) {
+    update.tags = req.body.tags;
+  } else {
+    update.tags = req.body.tags.match( /(?=\S)[^,]+?(?=\s*(,|$))/g );
+  }
+  if (req.body.snoozedUntil) {
+    update.snoozedUntil = req.body.snoozedUntil;
+  }
   var options = { new: true };
   Contact.findOneAndUpdate(query, update, options, function(err, contact){
     res.status(200)
