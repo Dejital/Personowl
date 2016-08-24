@@ -18,12 +18,39 @@ body {
 .page-title a {
   color: inherit;
 }
+.banner {
+  height: 300px;
+  width: 100%;
+  text-align: center;
+  display: table;
+}
+.banner-head {
+  display: table-cell;
+  vertical-align: middle;
+  margin-bottom: 0;
+}
+.banner-head img {
+  border: 0.5em solid rgba(0,0,0,0.2);
+  margin: auto;
+  max-width: 60%;
+}
+.landing-page h3 {
+  text-align: center;
+}
+.action-area {
+  text-align: center;
+  margin: 3em auto;
+}
 .header,
 .content,
 .footer {
   max-width: 25em;
   margin: 1em auto;
   padding: 0 1em;
+}
+.footer a {
+  font-size: 90%;
+  color: #888;
 }
 form {
   display: inline;

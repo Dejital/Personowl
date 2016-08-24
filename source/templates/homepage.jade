@@ -2,16 +2,46 @@ extend default
 
 block content
 
-  h2 Home
-
   if (!user)
-    p Manage your personal and business relationships with Personowl.
-    a(href="/login")
-      button.pure-button Login
-    span &nbsp;
-    a(href="/register")
-      button.pure-button Register
+    .banner
+      .banner-head
+        h2 Stay in Touch with Everyone.
+        a(href="/register")
+          button.pure-button.pure-button-primary Create an Account
+        span &nbsp;
+        a(href="/login")
+          button.pure-button Sign In
+
+    .landing-page
+
+      h3 Maintain Relationships
+      .divider
+      p
+        | Whether it's business, friendly or personal, Personowl manages it all.
+        | You will strengthen your network by being present in the lives
+        | of those around you.
+
+      h3 Remember Every Detail
+      .divider
+      p
+        | Stay sharp by remembering the little details about your acquaintances.
+        | The Notes feature allows you to quickly jot down anecdotes
+        | immediately following your meetings and conversations.
+
+      h3 Never Grow Apart
+      .divider
+      p
+        | Personowl tells you when a relationship is growing stale. Use this
+        | as an indicator to meet that person. You will never forget to follow
+        | up with anyone ever again.
+
+      .action-area
+        h2 Try Personowl for Free
+        a(href="/register")
+          button.pure-button.pure-button-primary Create an Account
+
   if (user)
+    h2 Home
     p
       | You are currently logged in as&nbsp;
       b #{user.username}
