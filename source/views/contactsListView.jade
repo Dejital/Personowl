@@ -26,12 +26,9 @@ div(ng-show='!vm.isBusy')
     strong Add a contact below to get started.
     p Use any name you want, like:
     ul
-      li
-        i John Fante
-      li
-        i Arturo and Camilla
-      li
-        i New programmer from work
+      li John Fante
+      li Arturo and Camilla
+      li New programmer from work
 
   br
 
@@ -40,5 +37,4 @@ div(ng-show='!vm.isBusy')
       input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
       button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add
 
-ul(ng-show='vm.isBusy').contacts-list
-  p Loading...
+p(ng-show='vm.isBusy') Loading...
