@@ -12,7 +12,7 @@ form.pure-form(role='form', name='contactsFilterForm', ng-show='vm.contacts.leng
 
 div(ng-show='!vm.isBusy')
   ul.contacts-list
-    li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery | orderBy: ["!!snoozedUntil", "lastContactAt"]')
+    li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery | orderBy: ["!!snoozedUntil", "!!lastContactAt"]')
       a(ng-href='/contacts#/{{contact._id}}' ng-bind='contact.name || "[no name]"')
       span.contacts-tags(ng-if='contact.tags.length > 0')
         a(ng-repeat='tag in contact.tags' ng-bind='tag' ng-click='vm.filterByTag(tag)')
