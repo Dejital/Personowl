@@ -90,7 +90,7 @@ ul.contacts-list
     font-size 80%
     cursor pointer
 
-  .contacts-date, .contacts-actions, .contacts-tags
+  .contacts-date, .contacts-actions, .contacts-tags, .contacts-snooze
     font-size 80%
     display block
     margin 0.3em 0
@@ -105,7 +105,17 @@ ul.contacts-list
   .contacts-tags a
     color #777
 
-  .expired
+  .contacts-snooze
+
+    a
+      cursor pointer
+      font-weight normal
+      color #ca3c3c
+    a:hover
+      text-decoration line-through
+
+
+.expired
     color #ca3c3c
 
 .contacts-list-filter

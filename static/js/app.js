@@ -67,8 +67,8 @@
         angular.copy(response.data.contacts, vm.contacts);
         setContactDates();
         setContactFlags();
-      }, function (error) {
-        vm.errorMessage = 'Failed to load contacts data. ' + error;
+      }, function () {
+        vm.errorMessage = 'Failed to load contacts data.';
       })
       .finally(function() {
         vm.isBusy = false;
@@ -123,12 +123,19 @@
         .then(function (response) {
           contact.snoozedUntilMessage = 'Snoozed until ';
           contact.snoozedUntilMessage += moment(response.data.contact.snoozedUntil).format('MMMM Do YYYY');
-        }, function (error) {
+        }, function () {
           vm.errorMessage = 'Failed to snooze contact. ';
-          vm.errorMessage += error;
-        })
-        .finally(function () {
-          vm.isSaving = false;
+        });
+    };
+
+    vm.removeSnooze = function (contact) {
+      contact.snoozedUntil = null;
+      var url = '/api/contacts/' + contact._id + '?_method=PUT';
+      $http.post(url, contact)
+        .then(function () {
+          contact.snoozedUntilMessage = '';
+        }, function () {
+          vm.errorMessage = 'Failed to remove snooze from contact. ';
         });
     };
 
@@ -149,9 +156,8 @@
     $http.get('/api/contacts/' + id)
       .then(function(response) {
         setContact(response.data.contact);
-      }, function(error) {
+      }, function() {
         vm.errorMessage = 'Failed to load contact. ';
-        vm.errorMessage += error;
       })
       .finally(function() {
         vm.isBusy = false;
@@ -165,9 +171,8 @@
       $http.post(url, vm.contact)
         .then(function (response) {
           setContact(response.data.contact);
-        }, function (error) {
+        }, function () {
           vm.errorMessage = 'Failed to save changes to contact. ';
-          vm.errorMessage += error;
         })
         .finally(function () {
           vm.isSaving = false;
@@ -191,9 +196,8 @@
       $http.post(url, vm.contact)
         .then(function (response) {
           angular.copy(response.data.notes, vm.contact.notes);
-        }, function (error) {
+        }, function () {
           vm.errorMessage = 'Failed to delete note. ';
-          vm.errorMessage += error;
         });
     };
 
@@ -216,9 +220,8 @@
         .then(function (response) {
           var interactions = formatInteractions(response.data.interactions);
           angular.copy(interactions, vm.contact.interactions);
-        }, function (error) {
+        }, function () {
           vm.errorMessage = 'Failed to delete interaction. ';
-          vm.errorMessage += error;
         });
     };
 
@@ -227,9 +230,8 @@
       $http.post(url, vm.contact)
         .then(function () {
           $location.path('/');
-        }, function (error) {
+        }, function () {
           vm.errorMessage = 'Failed to delete contact. ';
-          vm.errorMessage += error;
         });
     };
 

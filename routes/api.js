@@ -54,9 +54,7 @@ router.put('/contacts/:id', isAuthenticated, function(req, res) {
   } else {
     update.tags = req.body.tags.match( /(?=\S)[^,]+?(?=\s*(,|$))/g );
   }
-  if (req.body.snoozedUntil) {
-    update.snoozedUntil = req.body.snoozedUntil;
-  }
+  update.snoozedUntil = req.body.snoozedUntil;
   var options = { new: true };
   Contact.findOneAndUpdate(query, update, options, function(err, contact){
     res.status(200)

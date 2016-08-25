@@ -20,7 +20,8 @@ div(ng-show='!vm.isBusy')
         a(ng-click='vm.checkInContact(contact)') check-in
         a(ng-click='vm.snoozeContact(contact)') snooze
       span(ng-bind='contact.lastContactMessage' ng-class='{expired: contact.expired}').contacts-date
-      span(ng-bind='contact.snoozedUntilMessage').contacts-date.expired
+      span.contacts-snooze
+        a(ng-bind='contact.snoozedUntilMessage' ng-click='vm.removeSnooze(contact)')
 
   .tutorial(ng-if='vm.contacts.length === 0')
     strong Add a contact below to get started.

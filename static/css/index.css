@@ -93,7 +93,8 @@ ul.contacts-list {
 }
 .contacts-list .contacts-date,
 .contacts-list .contacts-actions,
-.contacts-list .contacts-tags {
+.contacts-list .contacts-tags,
+.contacts-list .contacts-snooze {
   font-size: 80%;
   display: block;
   margin: 0.3em 0;
@@ -109,7 +110,15 @@ ul.contacts-list {
 .contacts-list .contacts-tags a {
   color: #777;
 }
-.contacts-list .expired {
+.contacts-list .contacts-snooze a {
+  cursor: pointer;
+  font-weight: normal;
+  color: #ca3c3c;
+}
+.contacts-list .contacts-snooze a:hover {
+  text-decoration: line-through;
+}
+.expired {
   color: #ca3c3c;
 }
 .contacts-list-filter {
