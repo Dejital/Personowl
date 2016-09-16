@@ -12,6 +12,12 @@ router.get('/contacts', isAuthenticated, function(req, res) {
   var query = { "account" : req.user._id };
   var fields = 'name tags lastContactAt snoozedUntil';
   Contact.find(query, fields, function(err, contacts) {
+    var now = new Date();
+    contacts.forEach(function (contact) {
+      if (contact.snoozedUntil < now){
+        contact.snoozedUntil = '';
+      }
+    });
     res.status(200)
       .json({
         status: 'success',
@@ -54,7 +60,12 @@ router.put('/contacts/:id', isAuthenticated, function(req, res) {
   } else {
     update.tags = req.body.tags.match( /(?=\S)[^,]+?(?=\s*(,|$))/g );
   }
-  update.snoozedUntil = req.body.snoozedUntil;
+  var now = new Date();
+  var snoozedUntil = req.body.snoozedUntil;
+  if (snoozedUntil && snoozedUntil < now){
+    snoozedUntil = '';
+  }
+  update.snoozedUntil = snoozedUntil;
   var options = { new: true };
   Contact.findOneAndUpdate(query, update, options, function(err, contact){
     res.status(200)
