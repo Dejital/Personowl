@@ -20,8 +20,40 @@
       $routeProvider.otherwise({ redirectTo: '/' });
 
     })
+    .filter('orderContactsBy', orderContactsBy)
     .controller('contactListController', contactListController)
     .controller('contactController', contactController);
+
+  function orderContactsBy ($filter) {
+    return function (items, field, reverse) {
+
+      var newContacts = [];
+      var lastContacted = [];
+      var snoozed = [];
+
+      angular.forEach(items, function(item) {
+        if (!item.lastContactAt && !item.snoozedUntil) {
+          newContacts.push(item);
+        } else if (item.lastContactAt && !item.snoozedUntil) {
+          lastContacted.push(item);
+        } else if (item.snoozedUntil) {
+          snoozed.push(item);
+        } else {
+          newContacts.push(item);
+        }
+      });
+
+      lastContacted = $filter('orderBy')(lastContacted, 'lastContactAt');
+      snoozed = $filter('orderBy')(snoozed, 'snoozedUntil', false);
+
+      var filtered = newContacts.concat(lastContacted).concat(snoozed);
+      if (reverse) {
+        filtered.reverse();
+      }
+
+      return filtered;
+    };
+  }
 
   function contactListController($http, $filter, $location) {
 
@@ -41,6 +73,9 @@
             contact.snoozedUntilMessage = 'Snoozed until ';
             contact.snoozedUntilMessage += moment(contact.snoozedUntil).format('MMMM Do YYYY');
           }
+        }
+        if (!contact.lastContactAt){
+          contact.lastContactAt = null;
         }
       });
     }
