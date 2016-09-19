@@ -60,6 +60,9 @@ router.put('/contacts/:id', isAuthenticated, function(req, res) {
   } else {
     update.tags = req.body.tags.match( /(?=\S)[^,]+?(?=\s*(,|$))/g );
   }
+  if (!update.tags) {
+    update.tags = [];
+  }
   var now = new Date();
   var snoozedUntil = req.body.snoozedUntil;
   if (snoozedUntil && snoozedUntil < now){

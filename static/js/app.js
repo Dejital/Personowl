@@ -74,9 +74,6 @@
             contact.snoozedUntilMessage += moment(contact.snoozedUntil).format('MMMM Do YYYY');
           }
         }
-        if (!contact.lastContactAt){
-          contact.lastContactAt = null;
-        }
       });
     }
 
@@ -271,6 +268,7 @@
     };
 
     function setContact(contact) {
+      if (!contact.tags) contact.tags = [];
       contact.tags = contact.tags.join(',');
       contact.lastContactMessage = getRelativeDateText(contact.lastContactAt);
       contact.displayName = contact.name || '[no name]';
