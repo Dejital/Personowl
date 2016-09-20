@@ -5,24 +5,19 @@
   angular.module('app', ['ngRoute'])
     .config(function ($routeProvider, $locationProvider) {
 
-      $routeProvider.when('/contacts', {
+      $routeProvider.when('/', {
         controller: 'contactListController',
         controllerAs: 'vm',
         templateUrl: '/views/contactsListView.html'
       });
 
-      $routeProvider.when('/contacts/:id', {
+      $routeProvider.when('/:id', {
         controller: 'contactController',
         controllerAs: 'vm',
         templateUrl: '/views/contactView.html'
       });
 
-      $routeProvider.otherwise({ redirectTo: '/contacts' });
-
-      $locationProvider.html5Mode({
-        enabled: true,
-        requireBase: false
-      });
+      $routeProvider.otherwise({ redirectTo: '/' });
 
     })
     .filter('orderContactsBy', orderContactsBy)

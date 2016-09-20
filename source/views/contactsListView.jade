@@ -30,7 +30,7 @@ div(ng-show='!vm.isBusy')
       span.contacts-date Last contact never
 
     li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery | orderContactsBy')
-      a(ng-href='/contacts/{{contact._id}}' ng-bind='contact.name || "[no name]"')
+      a(ng-href='/contacts#/{{contact._id}}' ng-bind='contact.name || "[no name]"')
       span.contacts-tags(ng-if='contact.tags.length > 0')
         a(ng-repeat='tag in contact.tags' ng-bind='tag' ng-click='vm.filterByTag(tag)')
       span.contacts-actions
