@@ -2,18 +2,28 @@
 @import url('http://yui.yahooapis.com/pure/0.6.0/pure-min.css')
 @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css')
 
+color-body = #222
+color-background = white
+color-separator = rgba(0, 0, 0, 0.2)
+color-hyperlink = royalblue
+color-hyperlink-chosen = #233
+color-warning = #ca3c3c
+color-tags = #777
+color-actions = #555
+color-faint = #888
+
 body
   font-family 'Karla', monospace
   -webkit-font-smoothing antialiased
   text-rendering optimizeLegibility
   font-weight normal
   font-size 1.2em
-  background white
+  background color-background
   padding 1em 0
-  color #222
+  color color-body
 
 .divider
-  border-bottom 1px solid rgba(0, 0, 0, 0.2)
+  border-bottom 1px solid color-separator
 
 .page-title
   margin 0
@@ -27,7 +37,7 @@ a .fa
   cursor pointer
 
 .showing
-  color #233569
+  color color-hyperlink-chosen
 
 .banner
   height 300px
@@ -54,13 +64,13 @@ a .fa
 
 .footer a
   font-size 90%
-  color #888
+  color color-faint
 
 form
   display inline
 
 a
-  color royalblue
+  color color-hyperlink
   text-decoration none
 a:hover
 a:focus
@@ -69,7 +79,7 @@ a:focus
 .button-warning
   color white
   text-shadow 0 1px 1px rgba(0, 0, 0, 0.2)
-  background rgb(202, 60, 60)
+  background color-warning
 
 .button-xsmall
   font-size 70%
@@ -89,20 +99,11 @@ ul.contacts-list
     margin 1em 0
 
   li.new-user
-    color #999
+    color color-faint
     font-style italic
 
   a
     font-weight bold
-
-  .contacts-tag
-    padding 0.2em 0.7em
-    margin 0.3em 0
-    margin-right 2px
-    color #fff
-    background #999
-    font-size 80%
-    cursor pointer
 
   .contacts-date, .contacts-actions, .contacts-tags, .contacts-snooze
     font-size 80%
@@ -114,23 +115,23 @@ ul.contacts-list
     margin-right 0.7em
 
   .contacts-actions a
-    color #555
+    color color-actions
 
   .contacts-tags a
-    color #777
+    color color-tags
 
   .contacts-snooze
 
     a
       cursor pointer
       font-weight normal
-      color #ca3c3c
+      color color-warning
     a:hover
       text-decoration line-through
 
 
 .expired
-    color #ca3c3c
+    color color-warning
 
 .contacts-list-filter
   width 100%
@@ -140,10 +141,10 @@ ul.contacts-list
 
   a
     cursor pointer
-    color #ca3c3c
+    color color-warning
 
 .error-message
-  color #ca3c3c
+  color color-warning
 
 .tutorial
   ul

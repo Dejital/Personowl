@@ -26,7 +26,7 @@ a .fa {
   cursor: pointer;
 }
 .showing {
-  color: #233569;
+  color: #233;
 }
 .banner {
   height: 300px;
@@ -90,20 +90,11 @@ ul.contacts-list {
   margin: 1em 0;
 }
 .contacts-list li.new-user {
-  color: #999;
+  color: #888;
   font-style: italic;
 }
 .contacts-list a {
   font-weight: bold;
-}
-.contacts-list .contacts-tag {
-  padding: 0.2em 0.7em;
-  margin: 0.3em 0;
-  margin-right: 2px;
-  color: #fff;
-  background: #999;
-  font-size: 80%;
-  cursor: pointer;
 }
 .contacts-list .contacts-date,
 .contacts-list .contacts-actions,
