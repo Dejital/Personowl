@@ -10,7 +10,7 @@ var isAuthenticated = function(req, res, next) {
 
 router.get('/contacts', isAuthenticated, function(req, res) {
   var query = { "account" : req.user._id };
-  var fields = 'name tags lastContactAt snoozedUntil';
+  var fields = 'name tags lastContactAt snoozedUntil createdAt';
   Contact.find(query, fields, function(err, contacts) {
     var now = new Date();
     contacts.forEach(function (contact) {
@@ -55,13 +55,12 @@ router.post('/contacts', isAuthenticated, function(req, res) {
 router.put('/contacts/:id', isAuthenticated, function(req, res) {
   var query = { "_id" : req.params.id };
   var update = { name : req.body.name };
-  if (Array.isArray(req.body.tags)) {
+  if (!req.body.tags) {
+    update.tags = [];
+  } else if (Array.isArray(req.body.tags)) {
     update.tags = req.body.tags;
   } else {
     update.tags = req.body.tags.match( /(?=\S)[^,]+?(?=\s*(,|$))/g );
-  }
-  if (!update.tags) {
-    update.tags = [];
   }
   var now = new Date();
   var snoozedUntil = req.body.snoozedUntil;

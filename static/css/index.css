@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Karla");
 @import url("http://yui.yahooapis.com/pure/0.6.0/pure-min.css");
+@import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css");
 body {
   font-family: 'Karla', monospace;
   -webkit-font-smoothing: antialiased;
@@ -18,6 +19,14 @@ body {
 }
 .page-title a {
   color: inherit;
+}
+a .fa {
+  margin-left: 0.5em;
+  font-size: 1.4em;
+  cursor: pointer;
+}
+.showing {
+  color: #233569;
 }
 .banner {
   height: 300px;
@@ -79,6 +88,10 @@ ul.contacts-list {
 }
 .contacts-list li {
   margin: 1em 0;
+}
+.contacts-list li.new-user {
+  color: #999;
+  font-style: italic;
 }
 .contacts-list a {
   font-weight: bold;

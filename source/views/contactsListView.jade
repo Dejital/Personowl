@@ -2,16 +2,33 @@ nav
   a(href="/") Home
   span &nbsp;» Contacts
 
-h2 Contacts
+div
+  span(style='float:right!important;')
+    a(ng-click='vm.toggleAddContact()')
+      i(class='fa fa-user-plus', aria-hidden='true', ng-class='{ showing: vm.showAddContact }')
+    a(ng-click='vm.toggleFilter()')
+      i(class='fa fa-search', aria-hidden='true', ng-class='{ showing: vm.showFilter }')
+
+  h2 Contacts
 
 h4(ng-bind='vm.errorMessage' ng-if='vm.errorMessage').error-message
 
-form.pure-form(role='form', name='contactsFilterForm', ng-if='vm.contacts.length > 0', ng-submit='vm.selectTopContact()')
+form.pure-form(role='form', name='contactsFilterForm', ng-if='vm.showFilter', ng-submit='vm.selectTopContact()')
   fieldset
     input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts').contacts-list-filter
 
+form.pure-form(role='form', ng-submit='vm.addContact()', ng-if='vm.showAddContact')
+  fieldset
+    input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
+    button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add
+
 div(ng-show='!vm.isBusy')
   ul.contacts-list
+
+    li.new-user(ng-if='vm.newContact.name')
+      strong(ng-bind='vm.newContact.name')
+      span.contacts-date Last contact never
+
     li(ng-repeat='contact in vm.contacts | filter:vm.contactQuery | orderContactsBy')
       a(ng-href='/contacts#/{{contact._id}}' ng-bind='contact.name || "[no name]"')
       span.contacts-tags(ng-if='contact.tags.length > 0')
@@ -24,18 +41,11 @@ div(ng-show='!vm.isBusy')
         a(ng-bind='contact.snoozedUntilMessage' ng-click='vm.removeSnooze(contact)')
 
   .tutorial(ng-if='vm.contacts.length === 0')
-    strong Add a contact below to get started.
+    strong Add a contact to get started.
     p Use any name you want, like:
     ul
       li John Fante
       li Arturo and Camilla
       li New programmer at work
-
-  br
-
-  form.pure-form(role='form', ng-submit='vm.addContact()')
-    fieldset
-      input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
-      button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add
 
 p(ng-show='vm.isBusy') Loading...

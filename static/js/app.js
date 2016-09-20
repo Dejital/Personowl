@@ -43,6 +43,7 @@
         }
       });
 
+      newContacts = $filter('orderBy')(newContacts, 'createdAt', true);
       lastContacted = $filter('orderBy')(lastContacted, 'lastContactAt');
       snoozed = $filter('orderBy')(snoozed, 'snoozedUntil', false);
 
@@ -99,6 +100,9 @@
         angular.copy(response.data.contacts, vm.contacts);
         setContactDates();
         setContactFlags();
+        if (vm.contacts.length === 0) {
+          vm.toggleAddContact();
+        }
       }, function () {
         vm.errorMessage = 'Failed to load contacts data.';
       })
@@ -123,6 +127,9 @@
     };
 
     vm.filterByTag = function(tag) {
+      if (!vm.showFilter) {
+        vm.toggleFilter();
+      }
       vm.contactQuery = tag;
     };
 
@@ -169,6 +176,30 @@
         }, function () {
           vm.errorMessage = 'Failed to remove snooze from contact. ';
         });
+    };
+
+    vm.toggleAddContact = function () {
+      if (vm.showAddContact) {
+        vm.newContact.name = '';
+        vm.showAddContact = false;
+      } else {
+        if (vm.showFilter) {
+          vm.toggleFilter();
+        }
+        vm.showAddContact = true;
+      }
+    };
+
+    vm.toggleFilter = function () {
+      if (vm.showFilter) {
+        vm.contactQuery = '';
+        vm.showFilter = false;
+      } else {
+        if (vm.showAddContact) {
+          vm.toggleAddContact();
+        }
+        vm.showFilter = true;
+      }
     };
 
   }
