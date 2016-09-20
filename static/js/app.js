@@ -3,21 +3,26 @@
   'use strict';
 
   angular.module('app', ['ngRoute'])
-    .config(function ($routeProvider) {
+    .config(function ($routeProvider, $locationProvider) {
 
-      $routeProvider.when('/', {
+      $routeProvider.when('/contacts', {
         controller: 'contactListController',
         controllerAs: 'vm',
         templateUrl: '/views/contactsListView.html'
       });
 
-      $routeProvider.when('/:id', {
+      $routeProvider.when('/contacts/:id', {
         controller: 'contactController',
         controllerAs: 'vm',
         templateUrl: '/views/contactView.html'
       });
 
-      $routeProvider.otherwise({ redirectTo: '/' });
+      $routeProvider.otherwise({ redirectTo: '/contacts' });
+
+      $locationProvider.html5Mode({
+        enabled: true,
+        requireBase: false
+      });
 
     })
     .filter('orderContactsBy', orderContactsBy)
