@@ -4,10 +4,12 @@ nav
 
 div
   span(style='float:right!important;')
-    a(ng-click='vm.toggleAddContact()')
-      i(class='fa fa-user-plus', aria-hidden='true', ng-class='{ showing: vm.showAddContact }')
     a(ng-click='vm.toggleFilter()')
       i(class='fa fa-search', aria-hidden='true', ng-class='{ showing: vm.showFilter }')
+    a(ng-click='vm.toggleAddContact()')
+      i(class='fa fa-user-plus', aria-hidden='true', ng-class='{ showing: vm.showAddContact }')
+    a(ng-click='vm.togglePreferences()')
+      i(class='fa fa-cog', aria-hidden='true', ng-class='{ showing: vm.showPreferences }')
 
   h2 Contacts
 
@@ -17,10 +19,26 @@ form.pure-form(role='form', name='contactsFilterForm', ng-if='vm.showFilter', ng
   fieldset
     input(id='filter', type='text', name='filter', ng-model='vm.contactQuery', placeholder='Type to filter contacts').contacts-list-filter
 
-form.pure-form(role='form', ng-submit='vm.addContact()', ng-if='vm.showAddContact')
+form.pure-form.pure-form-aligned(role='form', ng-submit='vm.addContact()', ng-if='vm.showAddContact')
   fieldset
-    input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
-    button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add
+    div.pure-control-group
+      label(for='name') Name
+      input(id='name', type='text', name='name', ng-model='vm.newContact.name', placeholder='Contact name')
+    div.pure-controls
+      button(type='submit', ng-disabled='vm.isAddingContact').pure-button.pure-button-primary Add Contact
+
+form.pure-form.pure-form-aligned(role='form', ng-submit="vm.updatePreferences()", ng-if='vm.showPreferences', novalidate)
+  fieldset
+    div.pure-control-group
+      label(for='thresholdDays') Activity threshold
+      input(id='thresholdDays', type='text', name='thresholdDays', ng-model="vm.preferences.thresholdDays" placeholder='Activity threshold')
+
+    div.pure-control-group
+      label(for='snoozeDays') Days to snooze
+      input(id='snoozeDays', type='text', name='snoozeDays', ng-model="vm.preferences.snoozeDays" placeholder='Days to snooze')
+
+    div.pure-controls
+      button.pure-button.pure-button-primary(type='submit', ng-disabled='vm.isUpdatingPreferences') Update Preferences
 
 div(ng-show='!vm.isBusy')
   ul.contacts-list

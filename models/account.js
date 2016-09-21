@@ -4,7 +4,9 @@ var mongoose = require('mongoose')
 
 var Account = new Schema({
   username: String,
-  password: String
+  password: String,
+  thresholdDays: { type: Number, default: 14 },
+  snoozeDays: { type: Number, default: 7 }
 });
 
 Account.plugin(passportLocalMongoose);

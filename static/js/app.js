@@ -80,9 +80,9 @@
 
     function setContactFlags() {
       var now = moment(),
-        threshold = 30;
+        threshold = vm.preferences && vm.preferences.thresholdDays ? vm.preferences.thresholdDays : 30;
       angular.forEach(vm.contacts, function(contact) {
-        if (now.diff(contact.lastContactDate, 'days') > threshold) {
+        if (now.diff(contact.lastContactAt, 'days') > threshold) {
           contact.expired = true;
         }
       });
@@ -94,15 +94,20 @@
     vm.isAddingContact = false;
     vm.isBusy = true;
     vm.newContact = {};
+    vm.preferences = {};
+
+    $http.get('/api/preferences')
+      .then(function (response) {
+        angular.copy(response.data.preferences, vm.preferences);
+      }, function () {
+        vm.errorMessage = 'Failed to load preferences.';
+      });
 
     $http.get('/api/contacts')
       .then(function (response) {
         angular.copy(response.data.contacts, vm.contacts);
         setContactDates();
         setContactFlags();
-        if (vm.contacts.length === 0) {
-          vm.toggleAddContact();
-        }
       }, function () {
         vm.errorMessage = 'Failed to load contacts data.';
       })
@@ -123,6 +128,21 @@
         })
         .finally(function () {
           vm.isAddingContact = false;
+        });
+    };
+
+    vm.updatePreferences = function() {
+      vm.isUpdatingPreferences = true;
+      var url = '/api/preferences?_method=PUT';
+      $http.post(url, vm.preferences)
+        .then(function () {
+
+        }, function () {
+          vm.errorMessage = 'Failed to update preferences. ';
+        })
+        .finally(function () {
+          vm.isUpdatingPreferences = false;
+          setContactFlags();
         });
     };
 
@@ -156,7 +176,11 @@
     };
     
     vm.snoozeContact = function (contact) {
-      contact.snoozedUntil = moment().add(7, 'days').toDate();
+      var daysToSnooze = 7;
+      if (vm.preferences && vm.preferences.snoozeDays) {
+        daysToSnooze = vm.preferences.snoozeDays;
+      }
+      contact.snoozedUntil = moment().add(daysToSnooze, 'days').toDate();
       var url = '/api/contacts/' + contact._id + '?_method=PUT';
       $http.post(url, contact)
         .then(function (response) {
@@ -185,6 +209,8 @@
       } else {
         if (vm.showFilter) {
           vm.toggleFilter();
+        } else if (vm.showPreferences) {
+          vm.togglePreferences();
         }
         vm.showAddContact = true;
       }
@@ -197,8 +223,23 @@
       } else {
         if (vm.showAddContact) {
           vm.toggleAddContact();
+        } else if (vm.showPreferences) {
+          vm.togglePreferences();
         }
         vm.showFilter = true;
+      }
+    };
+
+    vm.togglePreferences = function () {
+      if (vm.showPreferences) {
+        vm.showPreferences = false;
+      } else {
+        if (vm.showFilter) {
+          vm.toggleFilter();
+        } else if (vm.showAddContact) {
+          vm.toggleAddContact();
+        }
+        vm.showPreferences = true;
       }
     };
 

@@ -1,5 +1,6 @@
 var express = require('express')
   , router = express.Router()
+  , Account = require('../models/account')
   , Contact = require('../models/contact');
 
 var isAuthenticated = function(req, res, next) {
@@ -7,6 +8,42 @@ var isAuthenticated = function(req, res, next) {
     return next();
   res.redirect('/login');
 };
+
+router.get('/preferences', isAuthenticated, function(req, res) {
+  var query = { "_id" : req.user._id };
+  var fields = 'thresholdDays snoozeDays';
+  Account.findOne(query, fields, function(err, preferences) {
+    res.status(200)
+      .json({
+        status: 'success',
+        preferences: preferences,
+        message: 'Retrieved preferences'
+      });
+  });
+});
+
+router.put('/preferences', isAuthenticated, function(req, res) {
+  var query = { "_id" : req.user._id };
+  var update = {};
+  if (req.body.thresholdDays) {
+    update.thresholdDays = req.body.thresholdDays;
+  }
+  if (req.body.snoozeDays) {
+    update.snoozeDays = req.body.snoozeDays;
+  }
+  var options = {
+    new: true,
+    fields: 'thresholdDays snoozeDays'
+  };
+  Account.findOneAndUpdate(query, update, options, function(err, preferences){
+    res.status(200)
+      .json({
+        status: 'success',
+        preferences: preferences,
+        message: 'Updated preferences'
+      });
+  });
+});
 
 router.get('/contacts', isAuthenticated, function(req, res) {
   var query = { "account" : req.user._id };
